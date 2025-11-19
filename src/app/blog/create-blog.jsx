@@ -11,13 +11,12 @@ export default function CreateBlogPage() {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // Protect route
   if (!token) {
     return (
-      <div className="text-center mt-20 text-red-600 font-semibold animate-fadeIn">
+      <div className="text-center mt-20 text-red-600 dark:text-red-400 font-semibold animate-fadeIn">
         You must be logged in to create blogs.
         <br />
-        <a href="/login" className="text-blue-600 underline">
+        <a href="/login" className="text-blue-600 dark:text-blue-400 underline">
           Go to Login
         </a>
       </div>
@@ -34,7 +33,6 @@ export default function CreateBlogPage() {
 
       let imageId = null;
 
-      // Upload Image
       if (coverImage) {
         const imgData = new FormData();
         imgData.append("files", coverImage);
@@ -49,7 +47,6 @@ export default function CreateBlogPage() {
         imageId = uploaded[0]?.id;
       }
 
-      // Create Blog Entry
       const res = await fetch(`${BASE_URL}/api/blogs`, {
         method: "POST",
         headers: {
@@ -89,21 +86,28 @@ export default function CreateBlogPage() {
 
   return (
     <div className="max-w-2xl mx-auto animate-fadeIn">
-      <div className="mb-8 rounded-2xl bg-white shadow-lg border border-gray-200 p-8">
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-6">
-          ✍️ Create a New Blog
+      <div className="mb-8 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl 
+        shadow-lg border border-gray-200 dark:border-gray-700 p-8">
+
+        <h1 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-6">
+           Create a New Blog
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Blog Title
             </label>
             <input
               type="text"
               placeholder="Enter blog title..."
-              className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition"
+              className="w-full p-3 rounded-lg border 
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                border-gray-300 dark:border-gray-700
+                focus:ring-2 focus:ring-blue-500 outline-none transition"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -112,12 +116,16 @@ export default function CreateBlogPage() {
 
           {/* Content */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Blog Content
             </label>
             <textarea
               placeholder="Write your blog in Markdown..."
-              className="w-full p-3 rounded-lg border h-44 resize-none focus:ring-2 focus:ring-blue-500 outline-none transition"
+              className="w-full p-3 rounded-lg border h-44 resize-none 
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                border-gray-300 dark:border-gray-700
+                focus:ring-2 focus:ring-blue-500 outline-none transition"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               required
@@ -126,26 +134,36 @@ export default function CreateBlogPage() {
 
           {/* Image Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Cover Image
             </label>
 
-            <label className="flex items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-blue-500 transition">
-              <span className="text-gray-500">Click to upload image</span>
+            <label
+              className="flex items-center justify-center h-32 
+              border-2 border-dashed border-gray-300 dark:border-gray-700
+              rounded-xl cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 transition
+              bg-white dark:bg-gray-800"
+            >
+              <span className="text-gray-500 dark:text-gray-400">
+                Click to upload image
+              </span>
               <input type="file" className="hidden" onChange={handleImageChange} />
             </label>
 
             {preview && (
               <img
                 src={preview}
-                className="mt-3 h-40 w-full object-cover rounded-xl shadow border hover:scale-[1.02] transition"
+                className="mt-3 h-40 w-full object-cover rounded-xl shadow 
+                border border-gray-300 dark:border-gray-700
+                hover:scale-[1.02] transition"
               />
             )}
           </div>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
-            className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 shadow-md transition"
+            className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-lg 
+              hover:bg-blue-700 transition shadow-md"
           >
             Publish 🚀
           </button>
@@ -154,7 +172,7 @@ export default function CreateBlogPage() {
           {message && (
             <p
               className={`text-sm mt-2 ${
-                message.startsWith("❌") ? "text-red-600" : "text-green-600"
+                message.startsWith("❌") ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"
               }`}
             >
               {message}

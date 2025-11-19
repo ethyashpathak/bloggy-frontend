@@ -24,7 +24,6 @@ export default function SignupPage() {
         throw new Error(data.error?.message || "Signup failed");
       }
 
-      // Save user + token
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("user", JSON.stringify(data.user));
 
@@ -37,26 +36,37 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-4 animate-fadeIn">
-      <div className="w-full max-w-md bg-white/80 backdrop-blur-xl shadow-xl rounded-2xl border border-gray-200 p-8">
+    <div className="flex min-h-[80vh] items-center justify-center px-4 animate-fadeIn
+      bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
 
-        <h1 className="text-3xl font-bold text-gray-900 text-center mb-2">
+      <div className="w-full max-w-md 
+        bg-white/80 dark:bg-gray-800/70 
+        backdrop-blur-xl shadow-xl 
+        rounded-2xl border 
+        border-gray-200 dark:border-gray-700 
+        p-8 transition">
+
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-2">
           Create Account
         </h1>
-        <p className="text-center text-gray-500 mb-6">
+        <p className="text-center text-gray-500 dark:text-gray-400 mb-6">
           Join our blogging community ✨
         </p>
 
         <form onSubmit={handleSignup} className="space-y-5">
 
-          {/* Username */}
+          
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Username
             </label>
             <input
               type="text"
-              className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition"
+              className="w-full p-3 rounded-lg border
+                bg-white dark:bg-gray-700 
+                text-gray-900 dark:text-gray-100
+                border-gray-300 dark:border-gray-600 
+                focus:ring-2 focus:ring-blue-500 outline-none transition"
               placeholder="Enter a username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -64,14 +74,18 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Email */}
+          
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Email
             </label>
             <input
               type="email"
-              className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition"
+              className="w-full p-3 rounded-lg border
+                bg-white dark:bg-gray-700 
+                text-gray-900 dark:text-gray-100
+                border-gray-300 dark:border-gray-600 
+                focus:ring-2 focus:ring-blue-500 outline-none transition"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -79,14 +93,18 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Password */}
+          
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Password
             </label>
             <input
               type="password"
-              className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition"
+              className="w-full p-3 rounded-lg border
+                bg-white dark:bg-gray-700 
+                text-gray-900 dark:text-gray-100
+                border-gray-300 dark:border-gray-600 
+                focus:ring-2 focus:ring-blue-500 outline-none transition"
               placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -94,27 +112,34 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Signup button */}
+         
           <button
-            className="w-full py-3 rounded-lg bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition shadow-md"
+            className="w-full py-3 rounded-lg bg-blue-600 text-white 
+              text-lg font-semibold hover:bg-blue-700 transition shadow-md"
           >
             Sign Up 🚀
           </button>
 
+          
           {message && (
             <p
-              className={`text-center text-sm ${
-                message.startsWith("❌") ? "text-red-600" : "text-green-600"
+              className={`text-center text-sm mt-2 ${
+                message.startsWith("❌")
+                  ? "text-red-600 dark:text-red-500"
+                  : "text-green-600 dark:text-green-400"
               }`}
             >
               {message}
             </p>
           )}
 
-          {/* Already have account? */}
-          <p className="text-center text-sm text-gray-500 mt-3">
+          
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-3">
             Already have an account?{" "}
-            <a href="/login" className="text-blue-600 font-medium hover:underline">
+            <a
+              href="/login"
+              className="text-blue-600 dark:text-blue-400 font-medium hover:underline"
+            >
               Login
             </a>
           </p>

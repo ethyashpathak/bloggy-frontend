@@ -48,13 +48,13 @@ export default function BlogPage() {
   if (loading) {
     return (
       <div className="space-y-6 animate-fadeIn">
-        <div className="h-64 w-full animate-pulse rounded-xl bg-gray-200" />
-        <div className="h-8 w-2/3 animate-pulse rounded bg-gray-200" />
+        <div className="h-64 w-full animate-pulse rounded-xl bg-gray-200 dark:bg-gray-700" />
+        <div className="h-8 w-2/3 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
         <div className="space-y-3">
           {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
-              className="h-4 w-full animate-pulse rounded bg-gray-100"
+              className="h-4 w-full animate-pulse rounded bg-gray-100 dark:bg-gray-700"
             />
           ))}
         </div>
@@ -64,7 +64,7 @@ export default function BlogPage() {
 
   if (error) {
     return (
-      <div className="rounded-md border border-red-200 bg-red-50 p-4 text-red-700">
+      <div className="rounded-md border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/30 p-4 text-red-700 dark:text-red-400">
         {error}
       </div>
     );
@@ -72,7 +72,7 @@ export default function BlogPage() {
 
   if (!blog) {
     return (
-      <div className="text-gray-600">
+      <div className="text-gray-600 dark:text-gray-400">
         Blog not found.{" "}
         <Link to="/" className="text-blue-600 underline">
           Go back
@@ -93,7 +93,7 @@ export default function BlogPage() {
   const coverUrl = getImageUrl(coverImage);
 
   return (
-    <article className="mx-auto max-w-3xl animate-fadeIn">
+  <article className="mx-auto max-w-3xl animate-fadeIn">
       {/* 🔥 Hero Image */}
       {coverUrl && (
         <div className="overflow-hidden rounded-2xl shadow-md mb-8">
@@ -106,12 +106,12 @@ export default function BlogPage() {
       )}
 
       {/* 🔥 Title */}
-      <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">
+      <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
         {title}
       </h1>
 
       {/* 🔥 Author + Date */}
-      <div className="mt-3 flex items-center gap-3 text-sm text-gray-500">
+  <div className="mt-3 flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
         {author && (
           <span className="font-medium text-gray-700">✍️ {author}</span>
         )}
@@ -125,7 +125,7 @@ export default function BlogPage() {
       </div>
 
       {/* 🔥 Content */}
-      <div className="prose prose-lg mt-8 max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-xl prose-img:shadow-md">
+      <div className="prose prose-lg mt-8 max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-xl prose-img:shadow-md dark:prose-invert">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
       </div>
 

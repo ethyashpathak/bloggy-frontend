@@ -9,7 +9,7 @@ export default function SearchResults() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Get ?author=__query__
+ 
   const query = searchParams.get("author") || "";
 
   useEffect(() => {

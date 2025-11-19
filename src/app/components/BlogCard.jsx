@@ -21,7 +21,7 @@ export default function BlogCard({ blog }) {
   const img = getImageUrl(coverImage);
 
   return (
-    <article className="group rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+  <article className="group rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       <div className="relative h-48 w-full overflow-hidden">
         {img && (
           <Link to={`/blog/${documentId}`}>
@@ -37,12 +37,12 @@ export default function BlogCard({ blog }) {
 
       <div className="p-5">
         <Link to={`/blog/${documentId}`}>
-          <h3 className="text-xl font-semibold text-gray-900 leading-tight hover:text-blue-600 transition">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 leading-tight hover:text-blue-600 transition">
             {title}
           </h3>
         </Link>
 
-        <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
+  <div className="mt-2 flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
           {uploadedDate && (
             <span>{new Date(uploadedDate).toLocaleDateString()}</span>
           )}
@@ -55,7 +55,7 @@ export default function BlogCard({ blog }) {
           )}
         </div>
 
-        <p className="mt-3 text-sm text-gray-600 leading-relaxed line-clamp-3">
+        <p className="mt-3 text-sm text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">
           {preview}...
         </p>
 
