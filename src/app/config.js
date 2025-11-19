@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:1337";
+export const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const API = {
   blogs: `${BASE_URL}/api/blogs`,

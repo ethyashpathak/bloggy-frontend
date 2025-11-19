@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BASE_URL } from "../config.js";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateBlogPage() {
   const [title, setTitle] = useState("");
@@ -7,6 +8,8 @@ export default function CreateBlogPage() {
   const [coverImage, setCoverImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();  // ← added navigation hook
 
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
@@ -68,11 +71,18 @@ export default function CreateBlogPage() {
 
       if (!res.ok) throw new Error(data.error?.message || "Failed");
 
-      setMessage("🎉 Blog created successfully!");
+      setMessage("🎉 Blog created successfully! Redirecting...");
+
+      // 🔥 Redirect after short delay
+      setTimeout(() => {
+        navigate("/");
+      }, 1200);
+
       setTitle("");
       setContent("");
       setCoverImage(null);
       setPreview(null);
+
     } catch (err) {
       setMessage("❌ " + err.message);
     }
@@ -90,12 +100,12 @@ export default function CreateBlogPage() {
         shadow-lg border border-gray-200 dark:border-gray-700 p-8">
 
         <h1 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-6">
-           Create a New Blog
+          Create a New Blog
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
 
-          {/* Title */}
+          {/* title */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Blog Title
@@ -114,7 +124,7 @@ export default function CreateBlogPage() {
             />
           </div>
 
-          {/* Content */}
+          {/* content */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Blog Content
@@ -132,7 +142,7 @@ export default function CreateBlogPage() {
             />
           </div>
 
-          {/* Image Upload */}
+          {/* image */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Cover Image
@@ -160,7 +170,7 @@ export default function CreateBlogPage() {
             )}
           </div>
 
-          {/* Submit */}
+          {/* button */}
           <button
             className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-lg 
               hover:bg-blue-700 transition shadow-md"
@@ -168,11 +178,13 @@ export default function CreateBlogPage() {
             Publish 🚀
           </button>
 
-          {/* Message */}
+          {/* message */}
           {message && (
             <p
               className={`text-sm mt-2 ${
-                message.startsWith("❌") ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"
+                message.startsWith("❌") 
+                  ? "text-red-600 dark:text-red-400" 
+                  : "text-green-600 dark:text-green-400"
               }`}
             >
               {message}
