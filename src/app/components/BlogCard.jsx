@@ -1,63 +1,74 @@
-import { Link } from 'react-router-dom'
-import { BASE_URL } from '../../app/config.js'
+import { Link } from "react-router-dom";
+import { BASE_URL } from "../../app/config.js";
 
 function getImageUrl(coverImage) {
-  const url = coverImage?.url
-  if (!url) return null
-  return url.startsWith('http') ? url : `${BASE_URL}${url}`
+  const url = coverImage?.url;
+  if (!url) return null;
+  return url.startsWith("http") ? url : `${BASE_URL}${url}`;
 }
 
 export default function BlogCard({ blog }) {
-  console.log("BLOGCARD RECEIVED:", blog);
-
   const {
     documentId,
     title = "Untitled",
     uploadedDate,
     content = "",
     coverImage,
-  } = blog
+    author,
+  } = blog;
 
-  const preview = content.replace(/[#>*_`]/g, "").slice(0, 160)
-  const img = getImageUrl(coverImage)
+  const preview = content.replace(/[#>*_`]/g, "").slice(0, 150);
+  const img = getImageUrl(coverImage);
 
   return (
-    <article className="group overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md">
-      {img && (
-        <Link to={`/blog/${documentId}`}>
-          <img
-            src={img}
-            alt={title}
-            className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-            loading="lazy"
-          />
-        </Link>
-      )}
-
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900">
-          <Link to={`/blog/${documentId}`} className="hover:underline">
-            {title}
+    <article className="group rounded-2xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+      <div className="relative h-48 w-full overflow-hidden">
+        {img && (
+          <Link to={`/blog/${documentId}`}>
+            <img
+              src={img}
+              alt={title}
+              className="h-full w-full object-cover transition-all duration-300 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
           </Link>
-        </h3>
-
-        {uploadedDate && (
-          <p className="mt-1 text-xs text-gray-500">
-            {new Date(uploadedDate).toLocaleDateString()}
-          </p>
         )}
+      </div>
 
-        <p className="mt-3 line-clamp-3 text-sm text-gray-600">{preview}...</p>
+      <div className="p-5">
+        <Link to={`/blog/${documentId}`}>
+          <h3 className="text-xl font-semibold text-gray-900 leading-tight hover:text-blue-600 transition">
+            {title}
+          </h3>
+        </Link>
+
+        <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
+          {uploadedDate && (
+            <span>{new Date(uploadedDate).toLocaleDateString()}</span>
+          )}
+
+          {author && (
+            <>
+              <span className="w-1 h-1 rounded-full bg-gray-400"></span>
+              <span className="font-medium">{author}</span>
+            </>
+          )}
+        </div>
+
+        <p className="mt-3 text-sm text-gray-600 leading-relaxed line-clamp-3">
+          {preview}...
+        </p>
 
         <div className="mt-4">
           <Link
             to={`/blog/${documentId}`}
-            className="inline-flex items-center gap-1 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
+            className="inline-flex items-center gap-1 text-blue-600 font-medium hover:gap-2 transition-all"
           >
-            Read more →
+            Read more
+            <span>→</span>
           </Link>
         </div>
       </div>
     </article>
-  )
+  );
 }

@@ -5,6 +5,10 @@ import HomePage from './app/page.jsx'
 import BlogPage from './app/blog/[documentId]/page.jsx'
 import CreateBlogPage from './app/blog/create-blog.jsx'
 import LoginPage from './app/login.jsx'
+import SignupPage from './app/signup.jsx'
+import MyBlogs from './app/components/MyBlog.jsx'
+import SearchResults from './app/components/SearchResults.jsx'
+
 
 function App() {
   return (
@@ -12,7 +16,10 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path="my-blogs" element={<MyBlogs />} />
+          <Route path="signup" element={<SignupPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="search" element={<SearchResults />} />
           <Route path="blogs" element={<HomePage />} />
           <Route path="create-blog" element={<CreateBlogPage />} />
           <Route path="blog/:documentId" element={<BlogPage />} />

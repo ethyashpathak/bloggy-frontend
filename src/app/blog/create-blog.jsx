@@ -14,7 +14,7 @@ export default function CreateBlogPage() {
   // Protect route
   if (!token) {
     return (
-      <div className="text-center mt-10 text-red-600 font-medium">
+      <div className="text-center mt-20 text-red-600 font-semibold animate-fadeIn">
         You must be logged in to create blogs.
         <br />
         <a href="/login" className="text-blue-600 underline">
@@ -29,13 +29,12 @@ export default function CreateBlogPage() {
     setMessage("Uploading...");
 
     try {
-      // 🔥 Auto set author + date
       const author = user.username || user.email;
       const uploadedDate = new Date().toISOString().split("T")[0];
 
       let imageId = null;
 
-      // 🔥 Upload Image
+      // Upload Image
       if (coverImage) {
         const imgData = new FormData();
         imgData.append("files", coverImage);
@@ -50,7 +49,7 @@ export default function CreateBlogPage() {
         imageId = uploaded[0]?.id;
       }
 
-      // 🔥 Create Blog Entry
+      // Create Blog Entry
       const res = await fetch(`${BASE_URL}/api/blogs`, {
         method: "POST",
         headers: {
@@ -89,39 +88,80 @@ export default function CreateBlogPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto space-y-4">
-      <h1 className="text-2xl font-bold">Create a Blog</h1>
+    <div className="max-w-2xl mx-auto animate-fadeIn">
+      <div className="mb-8 rounded-2xl bg-white shadow-lg border border-gray-200 p-8">
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-6">
+          ✍️ Create a New Blog
+        </h1>
 
-      <input
-        type="text"
-        placeholder="Title"
-        className="w-full p-2 border rounded"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Title */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Blog Title
+            </label>
+            <input
+              type="text"
+              placeholder="Enter blog title..."
+              className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
 
-      <textarea
-        placeholder="Content (Markdown)"
-        className="w-full p-2 border rounded h-40"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-      />
+          {/* Content */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Blog Content
+            </label>
+            <textarea
+              placeholder="Write your blog in Markdown..."
+              className="w-full p-3 rounded-lg border h-44 resize-none focus:ring-2 focus:ring-blue-500 outline-none transition"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+            />
+          </div>
 
-      <input type="file" onChange={handleImageChange} />
+          {/* Image Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Cover Image
+            </label>
 
-      {preview && (
-        <img
-          src={preview}
-          alt="Preview"
-          className="mt-2 h-32 rounded-lg object-cover border"
-        />
-      )}
+            <label className="flex items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-blue-500 transition">
+              <span className="text-gray-500">Click to upload image</span>
+              <input type="file" className="hidden" onChange={handleImageChange} />
+            </label>
 
-      <button className="px-4 py-2 bg-blue-600 text-white rounded">Publish</button>
+            {preview && (
+              <img
+                src={preview}
+                className="mt-3 h-40 w-full object-cover rounded-xl shadow border hover:scale-[1.02] transition"
+              />
+            )}
+          </div>
 
-      {message && <p className="text-sm">{message}</p>}
-    </form>
+          {/* Submit Button */}
+          <button
+            className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 shadow-md transition"
+          >
+            Publish 🚀
+          </button>
+
+          {/* Message */}
+          {message && (
+            <p
+              className={`text-sm mt-2 ${
+                message.startsWith("❌") ? "text-red-600" : "text-green-600"
+              }`}
+            >
+              {message}
+            </p>
+          )}
+        </form>
+      </div>
+    </div>
   );
 }
